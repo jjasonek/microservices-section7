@@ -1,0 +1,33 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: loans
+  profiles:
+    active: "prod"  # Default setting. This can also be set by the Configserver.
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ''
+  h2:
+    console:
+      enabled: true   # to see in browser http://localhost:8090/h2-console
+  jpa:
+    hibernate:
+      database-platform: org.hibernate.dialect.H2Dialect
+      ddl-auto: update
+      show-sql: true
+  config:
+    import: "optional:configserver:http://localhost:8071"
+  rabbitmq: #default values
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
