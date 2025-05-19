@@ -21,12 +21,6 @@ spring:
 #          search-locations: "classpath:/config"
 #          search-locations: "file:///C://Training//Microservices//section6//v2-spring-cloud-config//configserver//src//main//resources//config"
 
-  rabbitmq: #default values
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-
 management:
   endpoints:
     web:
