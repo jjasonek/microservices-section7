@@ -62,3 +62,21 @@ a4fb1d649922   jjasonek/configserver:s7   "java -cp @/app/jib-…"   2 hours ago
 893d5888d6d1   mysql                      "docker-entrypoint.s…"   2 hours ago   Up 2 hours (healthy)   0.0.0.0:3306->3306/tcp, 33060/tcp   accountsdb
 
 ### loans-ms and cards-ms did not start.
+
+* The port mapping is for host of the containers. But inside the docker network the containers communicate on their inner ports.
+    ** So the micreservice containers must use the DB containers inner ports.
+    ** But our DB clients connect through the host (localhost), so we still need the port mapping on the DB containers, 
+       bacause we need the DB containers exposed to the outside world.
+
+docker compose down
+docker compose up -d
+
+docker ps
+CONTAINER ID   IMAGE                      COMMAND                  CREATED          STATUS                    PORTS                               NAMES
+703ace46231a   jjasonek/cards:s7          "java -cp @/app/jib-…"   26 seconds ago   Up 5 seconds              0.0.0.0:9000->9000/tcp              cards-ms
+58f5099e91b9   jjasonek/accounts:s7       "java -cp @/app/jib-…"   26 seconds ago   Up 5 seconds              0.0.0.0:8080->8080/tcp              accounts-ms
+cbf13f998c28   jjasonek/loans:s7          "java -cp @/app/jib-…"   26 seconds ago   Up 5 seconds              0.0.0.0:8090->8090/tcp              loans-ms
+f2a70048864e   mysql                      "docker-entrypoint.s…"   27 seconds ago   Up 26 seconds (healthy)   33060/tcp, 0.0.0.0:3308->3306/tcp   cardsdb
+fd9101e01e33   jjasonek/configserver:s7   "java -cp @/app/jib-…"   27 seconds ago   Up 26 seconds (healthy)   0.0.0.0:8071->8071/tcp              configserver-ms
+90ab42a5c4e0   mysql                      "docker-entrypoint.s…"   27 seconds ago   Up 26 seconds (healthy)   0.0.0.0:3306->3306/tcp, 33060/tcp   accountsdb
+16281a52ebdc   mysql                      "docker-entrypoint.s…"   27 seconds ago   Up 26 seconds (healthy)   33060/tcp, 0.0.0.0:3307->3306/tcp   loansdb
