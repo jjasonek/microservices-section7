@@ -69,7 +69,7 @@
 				<version>3.4.5</version>
 				<configuration>
 					<to>
-						<image>jjasonek/${project.artifactId}:s6</image>
+						<image>jjasonek/${project.artifactId}:s7</image>
 					</to>
 				</configuration>
 			</plugin>
